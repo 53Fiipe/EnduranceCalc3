@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watts Table</title>
+    <link rel="stylesheet" href="table.css">
+
+    <style>
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            width: 200px;
+            height: 40px; /* Adjust height as needed */
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 30px; /* Make the select round */
+            overflow: hidden;
+            margin-right: 20px; /* Adjust margin */
+            margin-bottom: 10px; /* Add margin bottom to separate from inputs */
+        }
+
+        .custom-select select {
+            width: calc(100% - 20px); /* Adjust width to account for padding and arrow */
+            height: 100%;
+            border: none;
+            background-color: transparent;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 10px;
+            font-size: 16px;
+            color: #333333;
+            cursor: pointer;
+            outline: none; /* Remove default focus outline */
+        }
+
+        .custom-select::after {
+            content: '\25BC';
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 16px;
+            pointer-events: none;
+        }
+
+        input[type="number"] {
+            width: 200px;
+            height: 40px;
+            border-radius: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            margin-right: 20px;
+            margin-bottom: 10px; /* Add margin bottom to separate from selects */
+        }
+
+        .table-wrapper {
+            margin-top: 20px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .fl-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .fl-table th, .fl-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .fl-table thead th {
+            background-color: #0390d6;
+            color: white;
+        }
+
+        .fl-table tbody tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div style="display: flex; align-items: center; margin-bottom: 30px;">
+            <div class="custom-select">
+                <select id="sport-select">
+                    <option value="Cycling">Cycling</option>
+                    <option value="Running">Running</option>
+                </select>
+            </div>
+            <div class="custom-select">
+                <select id="method-select">
+                    <option value="FTP">FTP</option>
+                    <option value="20 Minute Test">20 Minute Test</option>
+                </select>
+            </div>
+            <p style="margin-right: 15px;">Watts</p>
+            <input type="number" id="watts-input" value="0">
+        </div>
+        <div class="table-wrapper">
+            <table class="fl-table">
+                <thead>
+                    <tr>
+                        <th>Zone</th>
+                        <th>% FTP</th>
+                        <th colspan="2">Range (Watts)</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const zone = ["1", "2", "3", "4", "5", "6", "7"];
+        const maior = "<";
+
+        const roundNumber = (num, decimals) => {
+            return Number(num.toFixed(decimals));
+        };
+
+        const getPercentageRanges = (sport) => {
+            if (sport === "Cycling") {
+                return [
+                    { zone: zone[0], min: 50, max: 70 },
+                    { zone: zone[1], min: 70, max: 83 },
+                    { zone: zone[2], min: 83, max: 91 },
+                    { zone: zone[3], min: 91, max: 100 },
+                    { zone: zone[4], min: 100, max: 102 },
+                    { zone: zone[5], min: 102, max: 110 },
+                    { zone: zone[6], min: 110, max: null },
+                ];
+            } else if (sport === "Running") {
+                return [
+                    { zone: zone[0], min: 50, max: 76 },
+                    { zone: zone[1], min: 76, max: 88 },
+                    { zone: zone[2], min: 88, max: 94 },
+                    { zone: zone[3], min: 94, max: 100 },
+                    { zone: zone[4], min: 100, max: 103 },
+                    { zone: zone[5], min: 103, max: 120 },
+                    { zone: zone[6], min: 120, max: null },
+                ];
+            }
+            return [];
+        };
+
+        const renderTableRows = (watts, sport) => {
+            const percentageRanges = getPercentageRanges(sport);
+            return percentageRanges.map((range) => {
+                const minWatts = roundNumber(watts * (range.min / 100), 0);
+                const maxWatts = range.max ? roundNumber(watts * (range.max / 100), 0) : "+";
+                return `<tr>
+                    <td>${range.zone}</td>
+                    <td>${range.min}-${range.max || maior}</td>
+                    <td>${minWatts}</td>
+                    <td>${maxWatts}</td>
+                </tr>`;
+            }).join('');
+        };
+
+        const updateTable = () => {
+            const watts = parseInt(document.getElementById('watts-input').value) || 0;
+            const sport = document.getElementById('sport-select').value;
+            document.getElementById('table-body').innerHTML = renderTableRows(watts, sport);
+        };
+
+        document.getElementById('sport-select').addEventListener('change', updateTable);
+        document.getElementById('method-select').addEventListener('change', updateTable);
+        document.getElementById('watts-input').addEventListener('input', updateTable);
+
+        // Initial rendering
+        updateTable();
+    </script>
+</body>
+</html>

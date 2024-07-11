@@ -8,58 +8,10 @@
 
     <style>
         body {
-            font-family: Helvetica, Arial, sans-serif;
-            background-color: #ffffff;
+            font-family: Helvetica;
+            -webkit-font-smoothing: antialiased;
+            background: rgba(255, 255, 255, 0.925);
             padding: 20px;
-        }
-
-        .custom-select {
-            position: relative;
-            display: inline-block;
-            width: 200px;
-            height: 40px; /* Adjust height as needed */
-            background-color: #ffffff;
-            border: 1px solid #ccc;
-            border-radius: 30px; /* Make the select round */
-            overflow: hidden;
-            margin-right: 20px; /* Adjust margin */
-            margin-bottom: 10px; /* Add margin bottom to separate from inputs */
-        }
-
-        .custom-select select {
-            width: calc(100% - 20px); /* Adjust width to account for padding and arrow */
-            height: 100%;
-            border: none;
-            background-color: transparent;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            padding: 10px;
-            font-size: 16px;
-            color: #333333;
-            cursor: pointer;
-            outline: none; /* Remove default focus outline */
-        }
-
-        .custom-select::after {
-            content: '\25BC';
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            font-size: 16px;
-            pointer-events: none;
-        }
-
-        input[type="number"] {
-            width: 200px;
-            height: 40px;
-            border-radius: 20px;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            margin-right: 20px;
-            margin-bottom: 10px; /* Add margin bottom to separate from selects */
         }
 
         .table-wrapper {
@@ -68,25 +20,42 @@
         }
 
         .fl-table {
-            width: 100%;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: normal;
+            border: none;
             border-collapse: collapse;
-            background: white;
+            width: 100%;
+            max-width: 100%;
+            white-space: nowrap;
+            background-color: rgb(255, 255, 255);
         }
 
-        .fl-table th, .fl-table td {
-            padding: 10px;
+        .fl-table td, .fl-table th {
             text-align: center;
-            border: 1px solid #ddd;
+            padding: 20px;
+        }
+
+        .fl-table td {
+            border-right: 10px solid #f8f8f8;
+            font-size: 12px;
         }
 
         .fl-table thead th {
-            background-color: #0390d6;
-            color: white;
+            color: #ffffff;
+            background: #0390d6;
         }
 
-        .fl-table tbody tr:nth-child(even) {
-            background-color: #f8f8f8;
+        .fl-table thead th:nth-child(odd) {
+            color: #ffffff;
+            background: #0390d6;
         }
+
+        .fl-table tr:nth-child(even) {
+            background: #F8F8F8;
+        }
+
+        
     </style>
 </head>
 <body>

@@ -54,7 +54,56 @@
         .fl-table tr:nth-child(even) {
             background: #F8F8F8;
         }
+                
+        input[type="number"] {
+            width: 200px;
+            height: 40px;
+            border-radius: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            margin-right: 20px;
+            margin-bottom: 10px; 
+            
+        }
 
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            width: 200px;
+            height: 40px; 
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 30px; 
+            overflow: hidden;
+            margin-right: 20px; 
+            margin-bottom: 10px; 
+        }
+
+        .custom-select select {
+            width: calc(100% - 20px); 
+            height: 100%;
+            border: none;
+            background-color: transparent;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 10px;
+            font-size: 16px;
+            color: #333333;
+            cursor: pointer;
+            outline: none; 
+        }
+
+        .custom-select::after {
+            content: '\25BC';
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 16px;
+            pointer-events: none;
+        }
         
     </style>
 </head>
